@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>test</title>
+</head>
+    <body>
+        <div class="typing">
+            <p id="text"></p>
+            <p id="romazi"></p>
+        </div>
+        <style>
+            .red {
+                color: red;
+            }
+            .green {
+                color: rgb(23, 194, 23);
+            }
+            .gray {
+                color: gray;
+            }
+            .blue {
+                color: blue;
+            }
+            .typing {
+                font-size: 150%;
+                text-align: center;
+            }
+        </style>
+        <script>
+            const word = [
+                "テスト",
+                "test",
+
+            ]
+
+            let nanmozime; // 現在の引用文のインデックス
+            let tangomozisu; // 現在の単語のインデックス
+            let nowword; // 現在の単語
+            let typeword; // 入力された文字列
+            let miss; // ポイント
+
+            function gamestart(){
+                var nownum = randomnumber();
+                nowword = word[nownum];
+                nanmozime = 0
+                document.getElementById('text').textContent = word[nownum-1];
+                document.getElementById('romazi').textContent = nowword;
+            }
+
+            function randomnumber() {
+                maxValue = word.length - 1
+                var randomNumber = Math.floor(Math.random() * maxValue) + 1; // 1からmaxValueまでのランダムな数を生成
+                if (randomNumber % 2 === 0) {
+                    // 偶数の場合、1を加えて奇数にする
+                    randomNumber += 1;
+                }
+                return randomNumber;
+            }
+
+            function handleKeyDown(event) {
+                var tangomozisu = nowword.length
+                if (event.key == nowword[nanmozime]) {
+                    nanmozime = nanmozime + 1;
+                    document.getElementById('romazi').innerHTML  = '<span class="green">'+nowword.substring(0, nanmozime)+'</span>'+nowword.substring(nanmozime,tangomozisu)
+                    if(tangomozisu == nanmozime) {
+                        console.log(nanmozime);
+                        gamestart()
+                    }
+                }else{
+                    miss = miss + 1;
+                    document.getElementById('romazi').innerHTML  = '<span class="green">'+nowword.substring(0, nanmozime)+'</span><span class="red">'+nowword.substring(nanmozime,nanmozime+1)+'</span>'+nowword.substring(nanmozime+1,tangomozisu)
+                }
+            }
+            document.addEventListener('keydown', handleKeyDown);
+            gamestart();
+        </script>
+    </body>
+</html>

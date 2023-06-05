@@ -1,9 +1,11 @@
 
   const quotes = [
-"konnitihawatasihahakusaidesu",
-"unkotyauwa",
-"ayatuuzaina",
-"sorena",
+
+"retasu",
+"komatuna",
+"hourensou",
+"rennkonn",
+"tamanegi",
 // 他の引用文を追加
 ];
 
