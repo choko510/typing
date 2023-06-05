@@ -1,63 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>game</title>
-    <script src="https://cdn.jsdelivr.net/npm/pixi.js@7.2.4/dist/pixi.min.js"></script>
+  <title>タイピングゲーム</title>
+  <meta http-equiv="Cache-Control" content="no-cache"> <!--　デバッグ用　-->
+  <style>
+    .correct {
+      color: green;
+    }
+    .incorrect {
+      color: red;
+    }
+  </style>
 </head>
 <body>
-    <script>
-        //参考 https://pixijs.io/examples/?v=v7.2.4#/text/text.js
-        //ドキュメント https://pixijs.io/examples/
-
-        const app = new PIXI.Application({ background: '#1099bb' });
-        document.body.appendChild(app.view);
-        const container = new PIXI.Container(); // コンテナを作成
-
-        // タイトルを表示
-        title = new PIXI.Text("スペースかエンターを押して開始");
-        title.x = app.screen.width / 2 - title.width / 2; // 画面中央に配置
-        title.y = app.screen.height / 2 + -20 + title.height / 2; // 画面中央に配置
-        app.stage.addChild(title);
-
-        let screen_text;
-        let screen_romazi;
-        function text() {
-            screen_text = new PIXI.Text("null");
-            screen_text.x = app.screen.width / 2 - screen_text.width / 2; // 画面中央に配置
-            screen_text.y = app.screen.height / 2 + -200 + screen_text.height / 2; // 画面中央に配置
-
-            container.addChild(screen_text);
-
-            screen_romazi = new PIXI.Text("null");
-            screen_romazi.x = app.screen.width / 2 - screen_romazi.width / 2; // 画面中央に配置
-            screen_romazi.y = app.screen.height / 2 + -150 + screen_romazi.height / 2;
-
-            container.addChild(screen_romazi);
-
-            app.stage.addChild(container);
-        }
-
-        function changeText(newText) { //文字変更変数
-            screen_text.text = newText;
-        }
-        function changeromazi(newText) { //文字変更変数
-            screen_romazi.text = newText;
-        }
-        function game(){
-            
-        }
-        function handleKeyDown(event) {
-            if (event.key === "Enter" || event.key === " " && title.text =="スペースかエンターを押して開始") { //タイトル処理
-                title.text = "";
-                text();
-                var start = "ok"
-                //console.log("test");
-            }
-        }
-        window.addEventListener("keydown", handleKeyDown);
-    </script>
+  <p id="quote"></p>
+  <p id="input"></p>
+  <p id="result"></p>
+  <div id="devtool-status"></div>
+  <script src="app.js"></script>
+  <script src="anticheat.js"></script>
 </body>
 </html>
