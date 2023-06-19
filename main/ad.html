@@ -14,6 +14,14 @@
             <p id="text"></p>
             <p id="romazi"></p>
         </div>
+        <div class="remodal" data-remodal-id="ad" data-remodal-options="hashTracking: false">
+            <button data-remodal-action="close" class="remodal-close"></button>
+            <!-- admax -->
+            <div class="admax-ads" data-admax-id="94a6496168b8adb34801ea0e5c804716" style="display:inline-block;width:300px;height:250px;"></div>
+            <script type="text/javascript">(admaxads = window.admaxads || []).push({admax_id: "94a6496168b8adb34801ea0e5c804716",type: "banner"});</script>
+            <script type="text/javascript" charset="utf-8" src="https://adm.shinobi.jp/st/t.js" async></script>
+            <!-- admax -->
+        </div>
         <style>
             .red {
                 color: red;
@@ -36,20 +44,20 @@
                 text-align:right;
             }
         </style>
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/remodal/1.0.5/remodal.min.css">
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/remodal/1.0.5/remodal-default-theme.min.css">
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/remodal/1.0.5/remodal.min.js"></script>
         <script>
             const word = [
                 "磁気ディスク装置",
                 "zikidhisukusouti",
-                "磁気ヘッド",
-                "zikiheddo",
                 "セクタ",
                 "sekuta",
                 "トラック",
                 "torakku",
                 "アクセスアーム",
                 "akusesua-mu",
-                "シリンダ",
-                "sirinda",
                 "ドット",
                 "dotto",
                 "ピクセル",
@@ -78,24 +86,10 @@
                 "tekisutofairu",
                 "バイナリファイル",
                 "bainarifairu",
-                "文字コード",
-                "moziko-do",
-                "JISコード",
-                "jisco-do",
-                "ASCIIコード",
-                "asciiko-do",
-                "Unicode",
-                "unicode",
-                "イニシャルコスト",
-                "inisharukosuto",
-                "ランニングコスト",
-                "ranningukosuto",
-                "ワイルドガード(? *)",
-                "wairudoga-do"
             ]
 
-            let nanmozime = 0 ; // 現在の引用文のインデックス
-            let tangomozisu = 0; // 現在の単語のインデックス
+            let nanmozime = "" ; // 現在の引用文のインデックス
+            let tangomozisu = ""; // 現在の単語のインデックス
             let nowword = ""; // 現在の単語
             let correcttype = 0; // 入力された文字列
             let miss = 0; // 　ミスタイプ数
@@ -113,7 +107,7 @@
                 maxValue = word.length - 1
                 var randomNumber = Math.floor(Math.random() * maxValue) + 1; // 1からmaxValueまでのランダムな数を生成
                 if (randomNumber % 2 === 0) {
-                    // 偶数の場合は1を加えて奇数にする、もっといい方法があるかも
+                    // 偶数の場合、1を加えて奇 数にする
                     randomNumber += 1;
                 }
                 return randomNumber;
@@ -121,7 +115,7 @@
 
             function handleKeyDown(event) {
                 var tangomozisu = nowword.length
-                if (event.key.toLowerCase() == nowword[nanmozime]) {
+                if (event.key == nowword[nanmozime]) {
                     nanmozime = nanmozime + 1;
                     correcttype = correcttype + 1;
                     document.getElementById('romazi').innerHTML  = '<span class="green">'+nowword.substring(0, nanmozime)+'</span>'+nowword.substring(nanmozime,tangomozisu)
@@ -130,16 +124,18 @@
                     }
                 }else{
                     miss = miss + 1;
+                    var modal = $.remodal.lookup[$('[data-remodal-id=ad]').data('remodal')];
+                    modal.open();
                     document.getElementById('romazi').innerHTML  = '<span class="green">'+nowword.substring(0, nanmozime)+'</span><span class="red">'+nowword.substring(nanmozime,nanmozime+1)+'</span>'+nowword.substring(nanmozime+1,tangomozisu)
                 }
-                seikakusei = (correcttype/(correcttype+miss))*100 //正答率を導き出してる
-                document.getElementById('misstype').textContent = Math.round(seikakusei * 10) / 10+"%" //正答率を四捨五入してmisstypeに入れてる
+                seikakusei = (correcttype/(correcttype+miss))*100
+                document.getElementById('misstype').textContent = Math.round(seikakusei * 10) / 10+"%"
             }
 
 
 
             document.addEventListener('keydown', handleKeyDown);
             gamestart();
-        </script>
+            </script>
     </body>
 </html>

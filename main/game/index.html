@@ -1,23 +1,35 @@
 <!DOCTYPE html>
-<html>
+<html lang="ja">
 <head>
     <meta charset="UTF-8">
-  <title>タイピングゲーム</title>
-  <meta http-equiv="Cache-Control" content="no-cache"> <!--　デバッグ用　-->
-  <style>
-    .correct {
-      color: green;
-    }
-    .incorrect {
-      color: red;
-    }
-  </style>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>test</title>
+    <link rel="stylesheet" href="../../../../css/all.min.css">
 </head>
-<body>
-    <p id="quote"></p>
-    <p id="input"></p>
-    <p id="result"></p>
-    <script src="app.js"></script>
-    <script src="anticheat.js"></script>
-</body>
+    <body>
+        <div class="typing">
+            <p id="text"></p>
+            <p id="romazi"></p>
+        </div>
+        <style>
+            .red {
+                color: red;
+            }
+            .green {
+                color: rgb(23, 194, 23);
+            }
+            .gray {
+                color: gray;
+            }
+            .blue {
+                color: blue;
+            }
+            .typing {
+                font-size: 150%;
+                text-align: center;
+            }
+        </style>
+        <script src="app.js"></script>
+    </body>
 </html>
