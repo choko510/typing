@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>test</title>
+    <link rel="preload" href="../../../css/font/GM.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="stylesheet" href="../../../css/all.min.css">
+</head>
+        <div class="status">
+            <p id="misstype">100%
+            </p>
+        </div>
+        <div class="typing">
+            <p id="setumei"></p>
+            <p id="text"></p>
+            <p id="romazi"></p>
+        </div>
+        <div class="menu">
+            <input type="checkbox" name="hard" id="hard-mode" onchange="changemode()">
+            <label for="hard-mode">ハードモード</label>
+        </div>
+            <a href="#" class="hide" id="skip" onclick="foget();">分からない</a>
+        <style>
+            .red {
+                color: red;
+            }
+            .green {
+                color: rgb(23, 194, 23);
+            }
+            .gray {
+                color: gray;
+            }
+            .blue {
+                color: blue;
+            }
+            .typing {
+                font-size: 180%;
+                text-align: center;
+            }
+            .status {
+                font-size:120%;
+                text-align:right;
+            }
+            .menu {
+                position: absolute;
+                bottom: 1px;
+            }
+            .hide {
+                display: none;
+            }
+        </style>
+        <script>
+            const word = [
+                "磁気ディスク装置",
+                "zikidhisukusouti",
+                "表面に磁性材料を塗布した円盤を回転させながら、磁気ヘッドを移動させて情報を読み書きする装置",
+                "磁気ヘッド",
+                "zikiheddo",
+                "磁気ディスク装置において、ディスク表面の磁気記録層にデータを読み書きする部分",
+                "セクタ",
+                "sekuta",
+                "磁気ディスク装置などの記録面で、データの読み書きをする最小単位",
+                "トラック",
+                "torakku",
+                "磁気ディスク装置などの記録面で、同心円状に分割された1周分の記録場所",
+                "アクセスアーム",
+                "akusesua-mu",
+                "磁気ディスク装置において、データを読み書きするために、磁気ヘッドをディスク上の所定の位置に移動させるための部品",
+                "シリンダ",
+                "sirinda",
+                "磁気ディスク装置において、同心円状の複数のトラックが、論理的な円筒状になっている記録単位",
+                "ドット",
+                "dotto",
+                "プリンタの出力する文字や画像を構成する最小の要素である点",
+                "ピクセル",
+                "pikuseru",
+                "色情報（色調や階調）を持つディジタル画像を構成する最小単位の点",
+                "プラグアンドプレイ",
+                "puraguandopurei",
+                "コンピュータにディジタルカメラやプリンタなどの周辺装置やインターネットに接続する際、ユーザが手動で設定を行わなくても、OSが最適な設定を自動的に行う機能。",
+                "GIF",
+                "gif",
+                "256色までの画像を保存することができインターネット上のイラストやアイコンなどの保存に使われているファイル形式",
+                "PNG",
+                "png",
+                "透明度などの情報を持ち、フルカラーの静止画像を劣化することなく圧縮できるファイル形式",
+                "JPEG",
+                "jpeg",
+                "フルカラーで扱うことのできる、静止画像を非可逆圧縮（画質は多少低下するが圧縮率が高い）して記録するファイル形式",
+                "圧縮",
+                "assyuku",
+                "データの意味を保ったまま、データ容量を小さく変換すること",
+                "解凍",
+                "kaitou",
+                "データの意味を保ったまま圧縮されたデータを元の状態に戻すこと",
+                "アーカイバ",
+                "a-kaiba",
+                "複数のファイルを１つにまとめたり、逆にまとめたファイルを元に戻したりするソフトウェア",
+                "ルートディレクトリ",
+                "ru-todhirekutori",
+                "階層型の記憶管理システムにおいて、最上位に位置するディレクトリ",
+                "サブディレクトリ",
+                "sabudhirekutori",
+                "ファイルを階層構造で管理する場合、最上位ディレクトリの下位に作成されるすべてのディレクトリ",
+                "拡張子",
+                "kakutyousi",
+                "ファイルの種類を識別する目的で使われる、ファイル名の最後に付ける文字列",
+                "テキストファイル",
+                "tekisutofairu",
+                "あらゆる機種のパソコンで利用できる、文字データのみで構成されたファイル",
+                "バイナリファイル",
+                "bainarifairu",
+                "文字として読み出すことのできない２進数形式のファイル",
+                "文字コード",
+                "moziko-do",
+                "コンピュータで扱う文字や記号の１つ１つに割り当てられた固有の数字",
+                "JISコード",
+                "jisko-do",
+                "日本工業規格で定めた文字コード",
+                "ASCIIコード",
+                "asciiko-do",
+                "アメリカの規格協会が定めたアメリカにおける標準の文字コード",
+                "Unicode",
+                "unicode",
+                "世界中で使われている多くの文字を表現するために定められた国際標準の文字コード",
+                "イニシャルコスト",
+                "inisharukosuto",
+                "新規にコンピュータシステムを導入する際に必要となる費用",
+                "ランニングコスト",
+                "ranningukosuto",
+                "コンピュータシステムの運用、または保存・管理に必要な費用",
+                "ワイルドガード(? *)",
+                "wairudoga-do",
+                "ファイルを検索する際に、任意の文字列や１つの文字の代用として使うことができる特殊文字",
+            ]
+
+            let nanmozime = 0 ; // 現在の引用文のインデックス
+            let tangomozisu = 0; // 現在の単語のインデックス
+            let nowword = ""; // 現在の単語
+            let correcttype = 0; // 入力された文字列
+            let miss = 0; // ミスタイプ数
+            let mode = "n";
+            var nownum = 0;
+
+            function gamestart(){
+                nownum = randomnumber(nownum);
+                nowword = word[nownum+1];
+                nanmozime = 0
+                document.getElementById('setumei').textContent = "";
+                if(mode == "h"){ //hardモードの時の処理
+                        document.getElementById('text').textContent = word[nownum+2];
+                        document.getElementById('romazi').textContent = "";
+                    }else{ //ノーマルモードの時の処理
+                        document.getElementById('text').textContent = word[nownum];
+                        document.getElementById('romazi').textContent = nowword ;
+                }
+            }
+
+            function randomnumber() {
+                maxValue = word.length - 2
+                var randomNumber = randomNumber = Math.floor(Math.random() * (maxValue / 3)) * 3; // 1からmaxValueまでのランダムな数を生成
+                return randomNumber;
+            }
+
+            function handleKeyDown(event) {
+                if(event.key.length != 1){return ""} //shiftとかスペースキーとか除外するやつ
+                var tangomozisu = nowword.length
+                if (event.key.toLowerCase() == nowword[nanmozime]) {
+                    //正解だったらの処理
+                    nanmozime = nanmozime + 1;
+                    correcttype = correcttype + 1;
+                    if(tangomozisu == nanmozime) {
+                        //打ち終わりの処理
+                        gamestart()
+                    }else if(mode == "h"){ //hardモードの時の処理
+                        document.getElementById('romazi').innerHTML  = '<span class="green">'+nowword.substring(0, nanmozime)+'</span>'
+                    }else{ //ノーマルモードの時の処理
+                        document.getElementById('romazi').innerHTML  = '<span class="green">'+nowword.substring(0, nanmozime)+'</span>'+nowword.substring(nanmozime,tangomozisu)
+                    }
+                }else if(event.key.toLowerCase() == "c" && nowword[nanmozime] == "k"  && (nowword[nanmozime+1] == "a" || nowword[nanmozime+1] == "u" || nowword[nanmozime+1] == "o")){//k打つときcでも行けるように
+                    nowword = mozichange("c")
+                    nanmozime = nanmozime + 1;
+                    correcttype = correcttype + 1;
+                    if(mode == "h"){ //hardモードの時の処理
+                        document.getElementById('romazi').innerHTML  = '<span class="green">'+nowword.substring(0, nanmozime)+'</span>'
+                    }else{ //ノーマルモードの時の処理
+                        document.getElementById('romazi').innerHTML  = '<span class="green">'+nowword.substring(0, nanmozime)+'</span>'+nowword.substring(nanmozime,tangomozisu)
+                    }
+                }else if(event.key.toLowerCase() == "j" && nowword[nanmozime] == "z"  && nowword[nanmozime+1] == "i"){//zi打つときjiでも行けるように
+                    nowword = mozichange("j")
+                    nanmozime = nanmozime + 1;
+                    correcttype = correcttype + 1;
+                    if(mode == "h"){ //hardモードの時の処理
+                        document.getElementById('romazi').innerHTML  = '<span class="green">'+nowword.substring(0, nanmozime)+'</span>'
+                    }else{ //ノーマルモードの時の処理
+                        document.getElementById('romazi').innerHTML  = '<span class="green">'+nowword.substring(0, nanmozime)+'</span>'+nowword.substring(nanmozime,tangomozisu)
+                    }
+                }else{ //ミスタイピング処理
+                    miss = miss + 1;
+                    if(mode == "h"){ //hardモードの時の処理
+                        document.getElementById('romazi').innerHTML  = '<span class="green">'+nowword.substring(0, nanmozime)+'</span><span class="red">'+event.key+'</span>'
+                    }else{ //ノーマルモードの時の処理
+                        document.getElementById('romazi').innerHTML  = '<span class="green">'+nowword.substring(0, nanmozime)+'</span><span class="red">'+nowword.substring(nanmozime,nanmozime+1)+'</span>'+nowword.substring(nanmozime+1,tangomozisu)
+                    }
+                }
+                seikakusei = (correcttype/(correcttype+miss))*100 //正答率を導き出してる
+                document.getElementById('misstype').textContent = Math.round(seikakusei * 10) / 10+"%" //正答率を四捨五入してmisstypeに入れてる
+            }
+
+            function mozichange(changetext){
+                let replacedString = nowword.substring(0, nanmozime) + changetext + nowword.substring(nanmozime+1);
+                return replacedString;
+            }
+
+            function foget(){
+                mode = "n";
+                nowword = word[nownum+1];
+                nanmozime = 0
+                document.getElementById('text').textContent = word[nownum];
+                document.getElementById('romazi').textContent = nowword ;
+                document.getElementById('setumei').textContent = word[nownum+2];
+            }
+
+            function changemode () {
+                var checkbox = document.getElementById("hard-mode");
+                if (checkbox.checked) { //hardがオンになった時の処理
+                    mode = "h";
+                    gamestart()
+                }else { //hardがオフになった時の処理
+                    mode = "n";
+                    gamestart()
+                }
+            }
+
+            document.addEventListener('keydown', handleKeyDown);
+            gamestart();
+
+            //構想
+            //すべてのやつをうたせるやつ
+            //その打たせた奴から分析して改善点を教える
+            //(分析の方法は誤タイピング数やその文字のタイピングスピード(すべてのタイピングスピードの平均よりもずば抜けておそかったりと)などを鑑みて決める)　
+        </script>
+    </body>
+</html>
